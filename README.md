@@ -1,145 +1,206 @@
-# Stochastic Pirates: Sector-Adaptive NLP and Regime-Controlled Portfolio Framework  
+````markdown
+# Stochastic Pirates: Sector-Adaptive NLP and Regime-Controlled Portfolio Framework
 
-> *“Bridging financial linguistics, quantitative modeling, and adaptive control to understand how narratives shape markets.”*  
+> *Bridging financial linguistics, quantitative modeling, and adaptive control to understand how narratives shape markets.*
 
 ---
 
-## Research Statement  
+## Research Statement
 
 This repository presents a **research-grade framework** exploring the intersection of **Natural Language Processing (NLP)**, **macroeconomic clustering**, and **dynamic portfolio optimization**.  
-Developed by **Stochastic Pirates**, the project investigates how **progressive word-momentum dictionaries**, **FinBERT-based sentiment**, and **quantile-based predictive modeling** can generate persistent alpha across market regimes.  
+Developed by **Stochastic Pirates**, the project investigates how **progressive word-momentum dictionaries**, **FinBERT-based sentiment**, and **quantile-based predictive modeling** can generate persistent alpha across market regimes.
 
 Originally designed for the **McGill FIAM 2025 Asset Management Competition**, the system has since evolved into an **independent quantitative research pipeline** emphasizing rigor, causality, and interpretability.
 
 ---
 
-## Overview  
+## Overview
 
-Our core objective:  
-> **Predict sector-level returns through dynamic narrative signals derived from financial text** — blending firm-level sentiment, word-frequency evolution, and cross-sector market structure.  
+Our core objective:
 
-The framework integrates:  
+> **Predict sector-level returns through dynamic narrative signals derived from financial text** — blending firm-level sentiment, word-frequency evolution, and cross-sector market structure.
+
+The framework integrates:
 1. **FinBERT sentiment scoring** on 10-K / 10-Q filings.  
 2. **Progressive word-momentum tracking** with exponential decay.  
 3. **Sector clustering** via ETF correlations and soft probabilities.  
 4. **Quantile XGBoost regressors** trained with rolling 10-year / 1-year OOS windows.  
-5. **Regime control** through a Hidden Markov Model (HMM) and PID-based exposure modulation.  
+5. **Regime control** via a Hidden Markov Model (HMM) and PID-based exposure modulation.
 
 ---
 
-## Methodology  
+## Methodology
 
-### 1. FinBERT Sentiment Extraction  
-Each SEC filing is parsed sentence-by-sentence using the FinBERT model (`sec_finbert_monthly_optimized.py`).  
-Outputs are aggregated into monthly firm-level sentiment factors:  
-\[
+### 1) FinBERT Sentiment Extraction
+Sentence-level classification (positive / neutral / negative) aggregated to firm-month factors.
+
+```math
 \text{Sentiment}_{i,t} = P(\text{pos})_{i,t} - P(\text{neg})_{i,t}
-\]
-These scores are merged with Compustat mappings for global coverage.
+````
+
+Outputs are merged to monthly panels and sector views.
 
 ---
 
-### 2. Progressive Word-Momentum Dictionaries  
-The dictionary expands as new sector-specific terms emerge (e.g., *“AI chip”*, *“EV battery”*).  
-Words are activated 12 months after first observation to avoid forward bias (`map_new_words_to_sectors.py`, `validate_activation_map.py`).  
+### 2) Progressive Word-Momentum Dictionaries
 
-**Exponential Decay Model:**  
-\[
-v_t = \alpha x_t + (1 - \alpha)v_{t-1}
-\]
-where  
-- \(x_t\) = raw word frequency share,  
-- \(v_t\) = decayed trend,  
-- \(\alpha\) ≈ 0.3 controls half-life memory.  
+A dictionary that **expands** over time as new sector-specific terms emerge (e.g., “AI chip”, “EV battery”).
+New terms are **activated 12 months after first observation** to avoid forward bias.
+Momentum is computed on **6-month change in sector word share**, smoothed by exponential decay:
 
-This ensures weakening sector correlations fade naturally while persistent narratives remain.
+```math
+v_t = \alpha x_t + (1 - \alpha)\,v_{t-1}
+```
+
+* (x_t): raw word share;  (v_t): decayed trend;  (\alpha \in (0,1)) controls half-life memory.
 
 ---
 
-### 3. Sector Clustering and ETF Mapping  
-`create_sector.py` and `corr_etfs.py` compute pairwise correlations between securities and sector ETFs (e.g., XLE, XLK, EEM).  
-Soft-probability cluster assignments guide sector-level model training.
+### 3) Sector Clustering & ETF Mapping
+
+We compute correlations between securities and sector ETFs (XLE, XLK, EEM, etc.) and assign **soft sector probabilities**.
+This provides a macro-context anchor and stabilizes model training.
 
 ---
 
-### 4. Quantile XGBoost Regression  
-Each sector runs an independent quantile XGBoost pipeline (`xgboost_model_uncertainty.py`):  
-- Rolling 10 y train / 1 y validation windows.  
-- GPU-accelerated `hist` tree method.  
-- Feature selection via in-sample importance ranking (top K ≈ 100).  
+### 4) Quantile XGBoost Regression
 
-Outputs include quantile-predicted returns \(y_{p05},\,y_{p50},\,y_{p95}\) for uncertainty estimation.
+Independent, sector-specialized **quantile** models with **rolling windows**:
 
----
+* **Train/Val/Test** split: strict chronology (10y train, 1y validation, 1y OOS step).
+* **GPU-accelerated** (`hist` tree method).
+* **Feature selection** via in-sample importance ranking (top-K ≈ 100).
 
-### 5. Regime-Adaptive Portfolio Control  
-
-#### Hidden Markov Model (HMM)  
-Detects macro regimes (bull, bear, neutral) using option-implied sentiment, volatility spreads, and market breadth (`hmm_ssi.py`).  
-
-#### PID Exposure Controller  
-Exposure \(E_t\) dynamically adjusts with tracking error \(e_t\):  
-\[
-E_t = K_p e_t + K_i \int_0^t e_\tau\,d\tau + K_d \frac{de_t}{dt}
-\]
-with empirically tuned \((K_p, K_i, K_d)\) ensuring smooth volatility targeting and rapid regime adaptation.  
-
-Implemented in `portfolio.py`.
+Outputs include (y_{p05}, y_{p50}, y_{p95}) for **uncertainty-aware** predictions.
 
 ---
 
-## Key Findings  
+### 5) Regime-Adaptive Portfolio Control
 
-1. **Narrative Persistence Predicts Sector Momentum** – sectors exhibiting rising word-momentum in filings outperform over the following 1–3 months.  
-2. **Decay Filtering Improves Signal Stability** – exponential half-life smoothing increases Sharpe ≈ +0.3 vs raw counts.  
-3. **Cross-Regime Robustness** – FinBERT sentiment loses strength during crises, while word-momentum remains predictive.  
-4. **Regime-Controlled Exposure** – the PID + HMM controller maintains volatility < 30 % and drawdowns < 20 %.  
-5. **Best Alpha Drivers** – Technology, Energy, and Emerging Markets contributed the most consistent excess returns.  
+**HMM Regimes.** We infer macro regimes (bull / bear / transition) from options-implied sentiment, volatility term-structure, skew, and market breadth.
 
----
+**PID Exposure Controller.** Exposure (E_t) adapts to tracking error (e_t), balancing responsiveness and stability:
 
-## Performance Summary  
+```math
+E_t = K_p\,e_t + K_i \int_0^t e_\tau\,d\tau + K_d \frac{d e_t}{dt}
+```
 
-| Metric | Value |
-|:--|--:|
-| **Net Annualized Return** | 58.43 % |
-| **Alpha (vs MSCI World)** | +49.7 % |
-| **Beta** | – 0.25 |
-| **Sharpe Ratio** | 2.30 |
-| **Sortino Ratio** | 2.55 |
-| **Information Ratio** | 2.47 |
-| **Max Drawdown** | – 39.3 % |
-| **Hit Ratio** | 0.82 |
-
-**Figures**  
-- `fig1_sentiment_regimes.png` – Sentiment & Regime Alignment  
-- `fig2_word_momentum_vs_market.png` – Sector Momentum vs MSCI World  
-- `fig3_portfolio_vs_benchmark.png` – Strategy Equity Curve  
-- `fig4_feature_importance.png` – Top Predictive Features  
+Tuned ((K_p, K_i, K_d)) ensure smooth volatility targeting and rapid regime adaptation.
 
 ---
 
-## 🏗 Implementation Architecture  
+## Key Findings
 
-| Script | Description |
-|:--|:--|
-| `combine_shards_to_filings_clean.py` | Merges FinBERT outputs into monthly firm datasets |
-| `make_sec_features.py` | Builds lagged & normalized financial features |
-| `make_sector_momentum_progressive.py` | Constructs progressive dictionary momentum with decay |
-| `freeze_sector_dictionary.py` | Freezes validated word–sector mappings |
-| `xgboost_model_uncertainty.py` | Quantile XGBoost model training + uncertainty estimates |
-| `portfolio.py` | Regime-adaptive portfolio optimizer |
-| `hmm_ssi.py` | Hidden Markov Model for regime inference |
-| `breadth_sp500.py` | Computes breadth and sentiment divergence |
-| `add_decay_feature.py` | Applies exponential decay to term frequencies |
-| `merge_predictions_clean.py` | Consolidates all sector predictions |
+1. **Narrative Persistence → Sector Momentum.** Rising sector word-momentum in filings predicts 1–3 month outperformance.
+2. **Decay Filtering Stabilizes Signal.** Exponential half-life smoothing adds ~**+0.3 Sharpe** vs raw counts (by reducing noise and overreaction).
+3. **Cross-Regime Robustness.** FinBERT sentiment weakens in crises; **word-momentum** remains predictive, improving resilience.
+4. **Regime-Controlled Exposure.** HMM + PID maintains **volatility < 30%** and **drawdowns < 20%** (targeted).
+5. **Alpha Drivers.** Technology, Energy, and Emerging Markets show the most consistent excess returns given narrative alignment.
 
 ---
 
-## ⚙️ Quick Setup  
+## Performance Summary
+
+| Metric                |      Value |
+| :-------------------- | ---------: |
+| Net Annualized Return | **58.43%** |
+| Alpha (vs MSCI World) | **+49.7%** |
+| Beta                  |  **–0.25** |
+| Sharpe Ratio          |   **2.30** |
+| Sortino Ratio         |   **2.55** |
+| Information Ratio     |   **2.47** |
+| Max Drawdown          | **–39.3%** |
+| Hit Ratio             |   **0.82** |
+
+---
+
+## Figures
+
+<p align="center">
+  <img src="assets/fig1_sentiment_regimes.png" width="860" alt="Sentiment & Regime Alignment"><br/>
+  <em>Figure 1 — Sentiment & regime alignment (HMM states, SSI dynamics).</em>
+</p>
+
+<p align="center">
+  <img src="assets/fig2_word_momentum_vs_market.png" width="860" alt="Sector Word Momentum vs Market"><br/>
+  <em>Figure 2 — Sector word-momentum vs MSCI World.</em>
+</p>
+
+<p align="center">
+  <img src="assets/fig3_portfolio_vs_benchmark.png" width="860" alt="Portfolio vs Benchmark"><br/>
+  <em>Figure 3 — Strategy equity curve vs benchmark.</em>
+</p>
+
+<p align="center">
+  <img src="assets/fig4_feature_importance.png" width="860" alt="Top Feature Importances"><br/>
+  <em>Figure 4 — Top predictive features and uncertainty bands.</em>
+</p>
+
+> **Note:** Place your PNGs under `assets/` with the exact filenames above.
+
+---
+
+## Implementation Architecture (Repo Map)
+
+| Script                                                       | Role                                                             |
+| :----------------------------------------------------------- | :--------------------------------------------------------------- |
+| `combine_shards_to_filings_clean.py`                         | Merge FinBERT outputs into monthly firm datasets                 |
+| `make_sec_features.py`                                       | Build lagged & normalized features (causal, no look-ahead)       |
+| `make_sector_momentum_progressive.py`                        | Construct progressive dictionary momentum with exponential decay |
+| `freeze_sector_dictionary.py`                                | Freeze validated word–sector mappings (stability over time)      |
+| `map_new_words_to_sectors.py` & `validate_activation_map.py` | Validate & activate new words with a 12-month delay              |
+| `xgboost_model_uncertainty.py`                               | Train quantile XGBoost by sector (GPU) + uncertainty             |
+| `portfolio.py`                                               | Regime-adaptive portfolio optimizer (HMM + PID + constraints)    |
+| `hmm_ssi.py`                                                 | Hidden Markov Model regime inference                             |
+| `breadth_sp500.py`                                           | Market breadth metrics (causal)                                  |
+| `add_decay_feature.py`                                       | Apply exponential decay to term frequencies                      |
+| `merge_predictions_clean.py`                                 | Consolidate sector predictions into master panel                 |
+| `build_word_trends.py`, `make_sector_momentum.py`            | Word trend construction & sector momentum variants               |
+| `sec_finbert_monthly_optimized.py`, `run_multi_instance.py`  | FinBERT batch scoring & multi-instance runner                    |
+
+---
+
+## Quick Setup
+
+> Minimal steps for local replication (Linux + Python 3.10+; GPU optional).
 
 ```bash
-git clone https://github.com/<yourusername>/stochastic-pirates.git
-cd stochastic-pirates
-pip install -r requirements.txt
+git clone https://github.com/<yourusername>/Sector-Adaptive-NLP-and-Regime-Controlled-Portfolio-Framework.git
+cd Sector-Adaptive-NLP-and-Regime-Controlled-Portfolio-Framework
+
+# (optional) create a venv
+python -m venv .venv && source .venv/bin/activate
+
+# install core dependencies
+pip install -r requirements.txt  # (add this file if not present)
+```
+
+**Run (example):**
+
+```bash
+# 1) Build/refresh word momentum & features
+python make_sector_momentum_progressive.py
+python add_decay_feature.py
+python make_sec_features.py
+
+# 2) Train sector quantile models
+python xgboost_model_uncertainty.py
+
+# 3) Portfolio: regime-aware construction
+python portfolio.py
+```
+
+> **Paths:** Update any dataset paths inside the scripts to your local directories.
+> **GPU:** If available, XGBoost will use `tree_method=hist` with `device="cuda"` (as configured).
+
+---
+
+
+
+---
+
+## Attribution
+
+Developed by **Stochastic Pirates** — McGill Quant Research Team.
+Originally built for the **McGill FIAM 2025 Asset Management Competition** 
 
