@@ -179,8 +179,6 @@ For research replication or educational purposes, we recommend:
 
 2. Utilizing cloud-based GPU environments or institutional compute clusters when replicating full-scale experiments.
 
-3. This project is intended as a research reference implementation, not as an optimized retail or production-ready system.
-
 ---
 
 ## Attribution
