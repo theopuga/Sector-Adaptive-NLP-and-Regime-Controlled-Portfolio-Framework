@@ -168,6 +168,21 @@ Tuned ((K_p, K_i, K_d)) ensure smooth volatility targeting and rapid regime adap
 
 ---
 
+## Computational Resources & Reproducibility Disclaimer
+
+This framework was developed and executed on a high-performance research infrastructure utilizing two NVIDIA A100 GPUs to enable large-scale FinBERT inference, quantile XGBoost training, and sector-level data aggregation.
+Reproducing the full experimental pipeline on non-specialized hardware may result in infeasible runtimes or memory limitations.
+
+For research replication or educational purposes, we recommend:
+
+1. Running isolated modules (e.g., feature construction, decay modeling, or word-momentum analysis) on reduced datasets;
+
+2. Utilizing cloud-based GPU environments or institutional compute clusters when replicating full-scale experiments.
+
+3. This project is intended as a research reference implementation, not as an optimized retail or production-ready system.
+
+---
+
 ## Attribution
 
 Developed by **Stochastic Pirates** — McGill Quant Research Team.
