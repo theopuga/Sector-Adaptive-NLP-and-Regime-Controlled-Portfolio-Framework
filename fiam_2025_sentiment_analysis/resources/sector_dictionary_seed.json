@@ -1,0 +1,76 @@
+{
+  "Technology": [
+    "software","softwares","chip","chips","semiconductor","semiconductors","ai","artificial intelligence",
+    "cloud","cloud computing","data","database","datacenter","data center","server","servers",
+    "gpu","gpus","cpu","cpus","microprocessor","microprocessors","sensor","sensors","embedded",
+    "cybersecurity","security","encryption","saas","platform","network","networking","wireless",
+    "internet","web","e-commerce","ecommerce","search","mobile","smartphone","smartphones",
+    "iot","automation","autonomous","robot","robots","robotics","algorithm","algorithms",
+    "machine learning","neural network","neural networks","big data","analytics","enterprise software",
+    "operating system","open source","middleware","storage","virtualization","virtual machine"
+  ],
+  "Healthcare": [
+    "drug","drugs","therapy","therapies","vaccine","vaccines","clinical","trial","trials",
+    "biotech","biotechnology","pharmaceutical","pharmaceuticals","generic","biosimilar","device","devices",
+    "oncology","immunology","cardiology","neurology","rare disease","orphan","diagnostic","diagnostics",
+    "fda","regulatory","approval","approvals","pipeline","phase 1","phase 2","phase 3","placebo","endpoint",
+    "efficacy","safety","adverse event","manufacturing batch","formulation","dosage","biologic","biologics",
+    "patent","intellectual property","clinical data","label","indication"
+  ],
+  "Energy": [
+    "oil","crude","brent","wti","gas","natural gas","lng","lpg","refinery","refineries","barrel","barrels",
+    "upstream","midstream","downstream","offshore","onshore","shale","fracking","rig","rigs","well","wells",
+    "pipeline","pipelines","storage","terminal","refining","drilling","seismic","exploration","production",
+    "lifting cost","reserve","reserves","royalty","hedge","hedging","fob","spot","futures"
+  ],
+  "Financials": [
+    "bank","banks","lender","lenders","loan","loans","credit","credits","mortgage","mortgages",
+    "deposit","deposits","net interest margin","nim","spread","underwriting","securitization","asset","assets",
+    "liability","liabilities","equity","capital","tier 1","tier-1","solvency","liquidity","insurance","insurer",
+    "premium","premiums","claim","claims","reinsurance","brokerage","trading","market making","risk",
+    "compliance","basel","collateral","derivative","derivatives","swap","swaps","bond","bonds"
+  ],
+  "Industrials": [
+    "manufacturing","factory","factories","plant","plants","assembly","supply","supply chain","procurement",
+    "equipment","machinery","machine","machines","tools","industrial","automation","controls","sensors",
+    "aerospace","aviation","airframe","engine","engines","defense","defence","contract","backlog","order book",
+    "logistics","shipping","freight","rail","trucking","warehousing","maintenance","oem","aftermarket"
+  ],
+  "Materials": [
+    "chemical","chemicals","petrochemical","polymer","polymers","resin","resins","catalyst","catalysts",
+    "metal","metals","aluminum","aluminium","copper","steel","stainless","nickel","zinc","lithium",
+    "mining","miner","miners","smelter","smelters","ore","grades","commodity","commodities","pricing",
+    "sulfuric acid","caustic","ethylene","propylene","methanol"
+  ],
+  "Consumer_Staples": [
+    "food","foods","beverage","beverages","grocery","groceries","household","cleaning","detergent","soap",
+    "toiletry","toiletries","personal care","packaged","packaged goods","cpg","retail","supermarket","supermarkets",
+    "distribution","private label","brand","brands","pricing","promo","volume","shelf","inventory","channel"
+  ],
+  "Consumer_Discretionary": [
+    "luxury","fashion","apparel","garment","garments","brand","brands","retail","stores","store","footfall",
+    "automotive","auto","vehicle","vehicles","dealer","dealers","after-sales","ecommerce","e-commerce",
+    "entertainment","media","theater","cinema","gaming","console","travel","airline","hotel","hospitality",
+    "leisure","sportswear","athletic","footwear"
+  ],
+  "Utilities": [
+    "electricity","power","generation","transmission","distribution","grid","interconnect","capacity","outage",
+    "rate case","tariff","regulated","regulatory","capex","maintenance","dispatch","baseload","peaker",
+    "nuclear","coal","gas-fired","hydro","wind","solar","renewable","ppa"
+  ],
+  "Commodities": [
+    "gold","silver","platinum","palladium","copper","aluminum","aluminium","zinc","nickel","iron ore",
+    "oil","brent","wti","natural gas","corn","wheat","soy","soybeans","cotton","sugar","coffee","rubber",
+    "futures","forward","spot","inventory","warehouse","lme","comex"
+  ],
+  "Emerging_Markets": [
+    "china","india","brazil","mexico","turkey","south africa","indonesia","malaysia","thailand","vietnam",
+    "philippines","latam","asean","emerging","developing","frontier","rmb","fx reserve","capital control"
+  ],
+  "Developed_ex-US": [
+    "europe","eurozone","uk","united kingdom","germany","france","italy","spain","netherlands",
+    "sweden","denmark","norway","finland","switzerland","austria","ireland","japan","australia","new zealand",
+    "canada","developed","oecd","boe","ecb","boj"
+  ]
+}
+

@@ -1,0 +1,32 @@
+textsec:
+  raw_dir: "data/textsec/raw"            
+  filings_clean: "data/textsec/interim/filings_clean.parquet"
+  cik_gvkey: "data/raw/cik_gvkey_linktable_USA_only.csv"
+  processed_dir: data/textsec/processed/
+  raw_dir_us: "data/textsec/raw/US"
+  raw_dir_global: "data/textsec/raw/Global"
+  filings_clean: "data/textsec/interim/filings_clean.parquet"
+  name_merge_global: "data/raw/Global_Name_Merge_by_DataDate_GVKEY_IID.csv"
+  # NEW: unified FinBERT outputs
+  finbert_master: "data/textsec/processed/FinBert/finbert_scores_master.parquet"
+  combined_dir:   "data/textsec/processed/FinBert/combined"   # by-country / by-continent / global
+  filings_clean_shards: "data/textsec/interim/filings_clean_shards"
+  filings_clean_manifest: "data/textsec/interim/filings_clean_manifest.csv"
+
+outputs:
+  sec_finbert_monthly: "data/textsec/processed/FiBert/sec_finbert_monthly.parquet"
+
+finbert:
+  model_name: "yiyanghkust/finbert-tone"
+  max_sents_per_doc: 2000
+  max_seq_len: 256
+  device: "cuda"        # "cpu" or "cuda"
+  batch_size: 32
+  lag_days: 7
+
+files:
+  stopwords: resources/stopwords_en.txt
+  lm_litigious: resources/lm_litigious.txt
+  lm_uncertainty: resources/lm_uncertainty.txt
+  lm_negative: resources/lm_negative.txt
+  lm_positive: resources/lm_positive.txt
