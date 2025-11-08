@@ -1,4 +1,3 @@
-````markdown
 # Stochastic Pirates: Sector-Adaptive NLP and Regime-Controlled Portfolio Framework
 
 > *Bridging financial linguistics, quantitative modeling, and adaptive control to understand how narratives shape markets.*
@@ -7,10 +6,12 @@
 
 ## Research Statement
 
-This repository presents a **research-grade framework** exploring the intersection of **Natural Language Processing (NLP)**, **macroeconomic clustering**, and **dynamic portfolio optimization**.  
-Developed by **Stochastic Pirates**, the project investigates how **progressive word-momentum dictionaries**, **FinBERT-based sentiment**, and **quantile-based predictive modeling** can generate persistent alpha across market regimes.
+This repository presents a **research-grade momentum framework** at the intersection of **Natural Language Processing (NLP)**, **macroeconomic clustering**, and **dynamic portfolio optimization**.  
+Developed by **Stochastic Pirates**, it investigates how **progressive word-momentum dictionaries** and **quantile-based predictive modeling** can enhance **momentum-based return forecasting** and **regime-adaptive portfolio construction**.  
+The study focuses on capturing both **statistical** and **narrative momentum**, showing how linguistic signals—filtered through decay and regime control—can complement traditional price-based momentum for more stable alpha generation across market cycles.
 
-Originally designed for the **McGill FIAM 2025 Asset Management Competition**, the system has since evolved into an **independent quantitative research pipeline** emphasizing rigor, causality, and interpretability.
+
+Originally designed for the **McGill FIAM 2025 Asset Management Competition**
 
 ---
 
@@ -64,14 +65,23 @@ This provides a macro-context anchor and stabilizes model training.
 ---
 
 ### 4) Quantile XGBoost Regression
-
 Independent, sector-specialized **quantile** models with **rolling windows**:
 
-* **Train/Val/Test** split: strict chronology (10y train, 1y validation, 1y OOS step).
-* **GPU-accelerated** (`hist` tree method).
-* **Feature selection** via in-sample importance ranking (top-K ≈ 100).
+- **Train/Val/Test** split: strict chronology (10y train, 1y validation, 1y OOS step).
+- **GPU-accelerated** (`hist` tree method).
+- **Feature selection** via in-sample importance ranking (top-K ≈ 100).
 
-Outputs include (y_{p05}, y_{p50}, y_{p95}) for **uncertainty-aware** predictions.
+> **Important:** the XGBoost models **do not use word-momentum features**.  
+> Word-momentum is applied **downstream** in the portfolio stage to **tilt sector weights** (see “Regime-Adaptive Portfolio Control”).
+
+#### Most Predictive Features
+- **Momentum (1 month)**
+- **Momentum (3 months)**
+- **Momentum (6 months)**
+- **Earnings Volatility**
+- **Volatility (3 months)**
+
+These rank consistently at the top of feature importance across sectors in our rolling backtests.
 
 ---
 
@@ -117,12 +127,12 @@ Tuned ((K_p, K_i, K_d)) ensure smooth volatility targeting and rapid regime adap
 ## Figures
 
 <p align="center">
-  <img src="assets/fig1_sentiment_regimes.png" width="860" alt="Sentiment & Regime Alignment"><br/>
+  <img src="assets/fig1_ssi_sentiment_regime.png" width="860" alt="Sentiment & Regime Alignment"><br/>
   <em>Figure 1 — Sentiment & regime alignment (HMM states, SSI dynamics).</em>
 </p>
 
 <p align="center">
-  <img src="assets/fig2_word_momentum_vs_market.png" width="860" alt="Sector Word Momentum vs Market"><br/>
+  <img src="assets/fig4_word_momentum_curves" width="860" alt="Sector Word Momentum vs Market"><br/>
   <em>Figure 2 — Sector word-momentum vs MSCI World.</em>
 </p>
 
@@ -132,8 +142,8 @@ Tuned ((K_p, K_i, K_d)) ensure smooth volatility targeting and rapid regime adap
 </p>
 
 <p align="center">
-  <img src="assets/fig4_feature_importance.png" width="860" alt="Top Feature Importances"><br/>
-  <em>Figure 4 — Top predictive features and uncertainty bands.</em>
+  <img src="assets/fig4_log_returns.png" width="860" alt="Log returns"><br/>
+  <em>Figure 4 — Log Adjusted Returns.</em>
 </p>
 
 > **Note:** Place your PNGs under `assets/` with the exact filenames above.
