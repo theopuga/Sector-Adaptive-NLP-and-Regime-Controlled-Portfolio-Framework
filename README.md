@@ -127,7 +127,7 @@ Tuned ((K_p, K_i, K_d)) ensure smooth volatility targeting and rapid regime adap
 ## Figures
 
 <p align="center">
-  <img src="assets/fig1_ssi_sentiment_regime.png" width="860" alt="Sentiment & Regime Alignment"><br/>
+  <img src="assets/fig1_ssi_sentiment_regime.png" width="500" alt="Sentiment & Regime Alignment"><br/>
   <em>Figure 1 — Sentiment & regime alignment (HMM states, SSI dynamics).</em>
 </p>
 
