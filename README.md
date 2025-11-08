@@ -132,7 +132,7 @@ Tuned ((K_p, K_i, K_d)) ensure smooth volatility targeting and rapid regime adap
 </p>
 
 <p align="center">
-  <img src="assets/fig4_word_momentum_curves" width="860" alt="Sector Word Momentum vs Market"><br/>
+  <img src="assets/fig4_sector_momentum_curves" width="860" alt="Sector Word Momentum vs Market"><br/>
   <em>Figure 2 — Sector word-momentum vs MSCI World.</em>
 </p>
 
@@ -142,7 +142,7 @@ Tuned ((K_p, K_i, K_d)) ensure smooth volatility targeting and rapid regime adap
 </p>
 
 <p align="center">
-  <img src="assets/fig4_log_returns.png" width="860" alt="Log returns"><br/>
+  <img src="assets/fig2_log_returns.png" width="860" alt="Log returns"><br/>
   <em>Figure 4 — Log Adjusted Returns.</em>
 </p>
 
