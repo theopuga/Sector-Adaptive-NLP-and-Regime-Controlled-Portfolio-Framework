@@ -142,7 +142,7 @@ Tuned ((K_p, K_i, K_d)) ensure smooth volatility targeting and rapid regime adap
 </p>
 
 <p align="center">
-  <img src="assets/fig2_log_returns.png" width="500" alt="Log returns"><br/>
+  <img src="assets/fig2_log_returns.png" width="384" alt="Log returns"><br/>
   <em>Figure 4 — Log Adjusted Returns.</em>
 </p>
 
