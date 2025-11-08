@@ -32,7 +32,7 @@ The framework integrates:
 
 ## Methodology
 
-### 1) FinBERT Sentiment Extraction
+### 1) FinBERT Sentiment Extraction (Dropped in the XGBoost model due to a lack of predictive power)
 Sentence-level classification (positive / neutral / negative) aggregated to firm-month factors.
 
 ```math
