@@ -146,8 +146,6 @@ Tuned ((K_p, K_i, K_d)) ensure smooth volatility targeting and rapid regime adap
   <em>Figure 4 — Log Adjusted Returns.</em>
 </p>
 
-> **Note:** Place your PNGs under `assets/` with the exact filenames above.
-
 ---
 
 ## Implementation Architecture (Repo Map)
