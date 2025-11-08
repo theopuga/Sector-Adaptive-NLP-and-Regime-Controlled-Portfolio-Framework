@@ -45,7 +45,7 @@ Outputs are merged to monthly panels and sector views.
 
 ### 2) Progressive Word-Momentum Dictionaries
 
-A dictionary that **expands** over time as new sector-specific terms emerge (e.g., “AI chip”, “EV battery”).
+A dictionary that **expands** over time as new sector-specific terms emerge (e.g., “AI Technology - February 2020, Technology”, “Covid - January 2020, Healthcare”).
 New terms are **activated 12 months after first observation** to avoid forward bias.
 Momentum is computed on **6-month change in sector word share**, smoothed by exponential decay:
 
