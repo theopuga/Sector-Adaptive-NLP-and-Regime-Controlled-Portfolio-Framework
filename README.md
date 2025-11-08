@@ -168,45 +168,6 @@ Tuned ((K_p, K_i, K_d)) ensure smooth volatility targeting and rapid regime adap
 
 ---
 
-## Quick Setup
-
-> Minimal steps for local replication (Linux + Python 3.10+; GPU optional).
-
-```bash
-git clone https://github.com/<yourusername>/Sector-Adaptive-NLP-and-Regime-Controlled-Portfolio-Framework.git
-cd Sector-Adaptive-NLP-and-Regime-Controlled-Portfolio-Framework
-
-# (optional) create a venv
-python -m venv .venv && source .venv/bin/activate
-
-# install core dependencies
-pip install -r requirements.txt  # (add this file if not present)
-```
-
-**Run (example):**
-
-```bash
-# 1) Build/refresh word momentum & features
-python make_sector_momentum_progressive.py
-python add_decay_feature.py
-python make_sec_features.py
-
-# 2) Train sector quantile models
-python xgboost_model_uncertainty.py
-
-# 3) Portfolio: regime-aware construction
-python portfolio.py
-```
-
-> **Paths:** Update any dataset paths inside the scripts to your local directories.
-> **GPU:** If available, XGBoost will use `tree_method=hist` with `device="cuda"` (as configured).
-
----
-
-
-
----
-
 ## Attribution
 
 Developed by **Stochastic Pirates** — McGill Quant Research Team.
